@@ -42,17 +42,5 @@ export class PersonLayoutComponent {
     });
   }
 
-  onEdit(id: string): void {
-    this.router.navigate(['edit', id], { relativeTo: this.route });
-  }
-
-  onCreate(): void {
-    this.router.navigate(['create'], { relativeTo: this.route });
-  }
-
-  onDelete(id: string): void {
-    if (confirm('¿Estás seguro de eliminar esta persona?')) {
-      this.personService.delete(id).subscribe(() => this.fetchPersons());
-    }
-  }
+  
 }

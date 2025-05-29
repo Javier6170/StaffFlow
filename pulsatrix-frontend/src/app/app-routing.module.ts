@@ -5,35 +5,31 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { LayoutComponent } from './modules/layout/layout.component';
 import { PersonRoutingRoutes } from './modules/persons/person-routing.module';
+import { NoAuthGuard } from './core/service/auth/noauth.service';
 
 const routes: Routes = [
   {
-    path: 'auth', 
+    path: 'auth',
+    canActivate: [NoAuthGuard],
     loadChildren: () =>
       import('./auth/auth-routing.module').then(m => m.AuthRoutingModule),
   },
   {
     path: '',
     component: LayoutComponent,
-    canActivate: [AuthGuard],
+    canActivate: [AuthGuard],        // protege dashboard, person, etc.
     children: [
       { path: 'dashboard', component: DashboardComponent },
+      {
+        path: 'person',
+        loadChildren: () =>
+          import('./modules/persons/person-routing.module')
+            .then(m => m.PersonRoutingModule),
+      },
       { path: '', redirectTo: 'dashboard', pathMatch: 'full' },
     ],
   },
-  {
-    path: 'person', 
-    canActivate: [AuthGuard],
-    loadChildren: () =>
-      import('./modules/persons/person-routing.module').then(m => m.PersonRoutingModule),
-  },
-  {
-    path: '**',
-    redirectTo: 'auth/login',
-    pathMatch: 'full',
-  },
-  ...AuthRoutingRoutes,
-  ...PersonRoutingRoutes
+  { path: '**', redirectTo: 'auth/login', pathMatch: 'full' },
 ];
 
 @NgModule({

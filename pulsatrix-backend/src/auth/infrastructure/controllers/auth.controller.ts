@@ -1,8 +1,10 @@
-import { Controller, Post, Body, HttpStatus, HttpCode } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpCode, UseGuards, Req } from '@nestjs/common';
 import { SignupDto } from '../../application/dto/signup.dto';
 import { LoginDto } from '../../application/dto/login.dto';
 import { RegisterUseCase } from '../../application/use-cases/register.use-case';
 import { LoginUseCase } from '../../application/use-cases/login.use-case';
+import { JwtAuthGuard } from '../guards/jwt-auth.guard';
+import { LogoutUseCase } from 'src/auth/application/use-cases/logout.use-case';
 
 class AuthResponse<T = any> {
   statusCode: number;
@@ -14,8 +16,9 @@ class AuthResponse<T = any> {
 export class AuthController {
   constructor(
     private readonly registerUseCase: RegisterUseCase,
-    private readonly loginUseCase: LoginUseCase
-  ) {}
+    private readonly loginUseCase: LoginUseCase,
+    private readonly logoutUseCase: LogoutUseCase
+  ) { }
 
   @Post('register')
   @HttpCode(HttpStatus.CREATED)
@@ -28,7 +31,7 @@ export class AuthController {
     };
   }
 
-   @Post('login')
+  @Post('login')
   @HttpCode(HttpStatus.OK)
   async login(
     @Body() dto: LoginDto,
@@ -40,5 +43,14 @@ export class AuthController {
       message: 'Inicio de sesión exitoso',
       data: { accessToken: access_token },
     };
+  }
+
+  @Post('logout')
+  @UseGuards(JwtAuthGuard)
+  @HttpCode(HttpStatus.NO_CONTENT)
+  async logout(@Req() req) {
+    const authHeader = req.headers.authorization as string;
+    const token = authHeader.replace(/^Bearer\s+/, '');
+    await this.logoutUseCase.execute(token);
   }
 }

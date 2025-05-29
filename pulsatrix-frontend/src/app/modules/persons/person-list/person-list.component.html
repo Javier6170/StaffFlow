@@ -1,0 +1,100 @@
+<div class="p-6 bg-gray-50 min-h-screen">
+    <ng-container *ngIf="!isChildRoute">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-gray-800">Gestión de Personas</h2>
+            <button (click)="onCreate()" class="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700">
+                Crear Persona
+            </button>
+        </div>
+
+        <div *ngIf="loading" class="text-center py-10 text-gray-500">Cargando...</div>
+
+        <table *ngIf="!loading && persons.length" class="min-w-full bg-white rounded-lg shadow-md overflow-hidden">
+            <thead>
+                <tr class="bg-gray-200 text-left text-gray-700 text-sm uppercase tracking-wider">
+                    <th class="px-6 py-3">Nombre</th>
+                    <th class="px-6 py-3">Apellido</th>
+                    <th class="px-6 py-3">Email</th>
+                    <th class="px-6 py-3">Puesto</th>
+                    <th class="px-6 py-3">Departamento</th>
+                    <th class="px-6 py-3">Contratación</th>
+                    <th class="px-6 py-3">Salario</th>
+                    <th class="px-6 py-3">Acciones</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let p of persons" class="border-b hover:bg-gray-100">
+                    <td class="px-6 py-4">{{ p.firstName }}</td>
+                    <td class="px-6 py-4">{{ p.lastName }}</td>
+                    <td class="px-6 py-4">{{ p.email }}</td>
+                    <td class="px-6 py-4">{{ p.position }}</td>
+                    <td class="px-6 py-4">{{ p.department }}</td>
+                    <td class="px-6 py-4">{{ p.hireDate | date:'mediumDate' }}</td>
+                    <td class="px-6 py-4">{{ p.salary | currency:'COP':'symbol':'1.0-0' }}</td>
+                    <td class="px-6 py-4 space-x-2">
+                        <button (click)="onView(p._id)"
+                            class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">
+                            Ver
+                        </button>
+                        <button (click)="onEdit(p._id)"
+                            class="bg-yellow-400 text-white px-3 py-1 rounded hover:bg-yellow-500">
+                            Editar
+                        </button>
+                        <button (click)="onDelete(p._id)"
+                            class="bg-red-500 text-white px-3 py-1 rounded hover:bg-red-600">
+                            Eliminar
+                        </button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- paginación omitida para brevedad -->
+        <!-- ... -->
+
+        <div *ngIf="!loading && !persons.length" class="text-center text-gray-500 py-10">
+            No hay personas registradas.
+        </div>
+    </ng-container>
+
+    <!-- Modal -->
+    <!-- person-list.component.html (nuevo bloque modal) -->
+    <div *ngIf="showModal" class="fixed inset-0 z-50 flex items-center justify-center px-4">
+        <!-- Overlay suave -->
+        <div class="absolute inset-0  bg-opacity-40 backdrop-blur-sm"></div>
+
+        <!-- Tarjeta modal -->
+        <div
+            class="relative bg-white rounded-2xl shadow-2xl w-full max-w-lg mx-auto p-6 transform transition-transform duration-300 ease-out scale-95 md:scale-100 animate-fade-in-up">
+            <!-- Botón cerrar -->
+            <button (click)="closeModal()"
+                class="absolute top-4 right-4 text-gray-500 hover:text-gray-800 bg-white hover:bg-gray-100 rounded-full p-2 transition">
+                ✕
+            </button>
+
+            <!-- Contenido -->
+            <h3 class="text-2xl font-semibold mb-6 text-gray-800 text-center">Detalle de Persona</h3>
+
+            <div *ngIf="modalLoading" class="text-center py-10 text-gray-500">
+                Cargando...
+            </div>
+
+            <div *ngIf="!modalLoading && selectedPerson" class="space-y-4 text-gray-700">
+                <p><span class="font-medium">Nombre:</span> {{ selectedPerson.firstName }} {{ selectedPerson.lastName }}
+                </p>
+                <p><span class="font-medium">Email:</span> {{ selectedPerson.email }}</p>
+                <p><span class="font-medium">Puesto:</span> {{ selectedPerson.position }}</p>
+                <p><span class="font-medium">Departamento:</span> {{ selectedPerson.department }}</p>
+                <p>
+                    <span class="font-medium">Contratación:</span>
+                    {{ selectedPerson.hireDate | date:'fullDate' }}
+                </p>
+                <p>
+                    <span class="font-medium">Salario:</span>
+                    {{ selectedPerson.salary | currency:'COP':'symbol':'1.0-0' }}
+                </p>
+            </div>
+        </div>
+    </div>
+
+</div>

@@ -1,11 +1,30 @@
-<div class="p-6">
-  <h1 class="text-3xl font-bold mb-4 text-gray-800">Bienvenido al Dashboard</h1>
-  <p class="text-gray-600 mb-6">Aquí puedes gestionar los recursos de la aplicación.</p>
+<!-- dashboard.component.html -->
+<div class="p-6 bg-gray-50 min-h-screen">
+  <h1 class="text-3xl font-bold mb-8 text-gray-800">Bienvenido al Dashboard</h1>
 
-  <a
-    routerLink="/person"
-    class="inline-block bg-blue-600 text-white px-5 py-2 rounded hover:bg-blue-700 transition"
-  >
-    Gestionar Personas
-  </a>
+  <div class="grid gap-6 grid-cols-1 lg:grid-cols-2">
+    <!-- PIE -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Personas por Departamento</h2>
+      <div class="relative h-80"> <!-- <-- altura fija -->
+        <div *ngIf="loadingDept()" class="absolute inset-0 flex items-center justify-center bg-white/70 rounded-2xl">
+          <span class="text-gray-500">Cargando...</span>
+        </div>
+        <apx-chart #pieChart [series]="deptSeries()" [chart]="deptChart()" [labels]="deptLabels()"
+          [title]="deptTitle()"></apx-chart>
+      </div>
+    </div>
+
+    <!-- LINE -->
+    <div class="bg-white rounded-2xl shadow-lg p-6 flex flex-col">
+      <h2 class="text-xl font-semibold text-gray-700 mb-4">Contrataciones por Mes</h2>
+      <div class="relative h-80"> <!-- <-- altura fija -->
+        <div *ngIf="loadingLine()" class="absolute inset-0 flex items-center justify-center bg-white/70 rounded-2xl">
+          <span class="text-gray-500">Cargando...</span>
+        </div>
+        <apx-chart  #lineChartComp     [series]="lineSeries()" [chart]="lineChart()" [xaxis]="lineXaxis()"
+          [title]="lineTitle()"></apx-chart>
+      </div>
+    </div>
+  </div>
 </div>

@@ -17,7 +17,7 @@ export class PersonRegisterComponent {
   constructor(
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router,
+    public router: Router,
     private personsService: PersonService
   ) { }
 
@@ -53,11 +53,11 @@ export class PersonRegisterComponent {
 
     if (this.isEditMode) {
       this.personsService.update(this.personId, this.personForm.value).subscribe(() => {
-        this.router.navigate(['/persons']);
+        this.router.navigate(['/person']);
       });
     } else {
       this.personsService.create(this.personForm.value).subscribe(() => {
-        this.router.navigate(['/persons']);
+        this.router.navigate(['/person']);
       });
     }
   }

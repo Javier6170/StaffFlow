@@ -9,6 +9,7 @@ import { LayoutComponent } from './modules/layout/layout.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { PersonModule } from './modules/persons/person.module';
+import { NgApexchartsModule } from 'ng-apexcharts';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { PersonModule } from './modules/persons/person.module';
     BrowserModule,
     AppRoutingModule,
     AuthModule,
-    PersonModule
+    PersonModule,
+    NgApexchartsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -8,6 +8,9 @@ import { UserRepository } from './infrastructure/repositories/user.repository';
 import { UserSchema } from './infrastructure/schemas/user.schema';
 import { JwtStrategy } from './infrastructure/strategies/jwt.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { TokenBlacklistRepository } from './infrastructure/repositories/token-blacklist.repository';
+import { LogoutUseCase } from './application/use-cases/logout.use-case';
+import { JwtAuthGuard } from './infrastructure/guards/jwt-auth.guard';
 
 @Module({
   imports: [
@@ -28,8 +31,12 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
   providers: [
     RegisterUseCase,
     LoginUseCase,
+    TokenBlacklistRepository,
+    LogoutUseCase,
     UserRepository,
     JwtStrategy,
+    JwtAuthGuard
   ],
+  exports: [JwtStrategy, JwtAuthGuard, TokenBlacklistRepository]
 })
 export class AuthModule {}

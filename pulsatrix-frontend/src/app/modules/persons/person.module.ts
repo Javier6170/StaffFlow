@@ -5,9 +5,10 @@ import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
 import { PersonLayoutComponent } from "./person-layout/person-layout.component";
 import { PersonRegisterComponent } from './person-register/person-register.component';
+import { PersonListComponent } from './person-list/person-list.component';
 
 @NgModule({
-  declarations: [PersonLayoutComponent, PersonRegisterComponent],
+  declarations: [PersonLayoutComponent, PersonRegisterComponent, PersonListComponent],
   imports: [
     FormsModule,
     ReactiveFormsModule,

@@ -13,7 +13,7 @@ import { TokenInterceptor } from "../core/interceptor/token.interceptor";
     FormsModule,
     CommonModule,
     HttpClientModule,
-    RouterModule,
+    RouterModule
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
   exports: [LoginComponent, RegisterComponent],
