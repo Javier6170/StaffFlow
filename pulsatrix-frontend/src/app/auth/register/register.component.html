@@ -1,0 +1,66 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
+    <div class="text-center mb-6">
+      <h2 class="text-2xl font-bold text-gray-800">Crear una cuenta</h2>
+      <p class="text-sm text-gray-500 mt-1">Completa tus datos para registrarte</p>
+    </div>
+
+    <form (submit)="signup()" class="space-y-5">
+      <div>
+        <label for="name" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+        <input
+          id="name"
+          name="name"
+          type="text"
+          [(ngModel)]="signupData.name"
+          required
+          placeholder="Ingresa tu nombre"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </div>
+      <div>
+        <label for="email" class="block text-sm font-medium text-gray-700">Correo electrónico</label>
+        <input
+          id="email"
+          name="email"
+          type="email"
+          [(ngModel)]="signupData.email"
+          required
+          placeholder="ejemplo@correo.com"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input
+          id="password"
+          name="password"
+          type="password"
+          [(ngModel)]="signupData.password"
+          required
+          minlength="6"
+          placeholder="Mínimo 6 caracteres"
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </div>
+      <button
+        type="submit"
+        class="w-full bg-green-600 text-white py-2 rounded-lg font-semibold hover:bg-green-700 transition duration-300"
+      >
+        Registrarme
+      </button>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600">
+        ¿Ya tienes una cuenta?
+      </p>
+      <button
+        (click)="redirectToLogin()"
+        class="mt-2 w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-300 transition duration-300"
+      >
+        Volver al inicio de sesión
+      </button>
+    </div>
+  </div>
+</div>
