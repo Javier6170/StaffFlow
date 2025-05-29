@@ -1,0 +1,51 @@
+<div class="min-h-screen flex items-center justify-center bg-gray-100">
+  <div class="w-full max-w-md bg-white p-8 rounded-2xl shadow-xl">
+    <div class="text-center mb-6">
+      <h1 class="text-2xl font-bold text-gray-800">Inicio de Sesión</h1>
+    </div>
+    <form (submit)="login()" class="space-y-5">
+      <div>
+        <label for="username" class="block text-sm font-medium text-gray-700">Usuario</label>
+        <input 
+          id="username" 
+          name="username" 
+          type="text"
+          [(ngModel)]="loginData.username"
+          placeholder="Ingresa tu usuario"
+          required
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </div>
+      <div>
+        <label for="password" class="block text-sm font-medium text-gray-700">Contraseña</label>
+        <input 
+          id="password" 
+          name="password" 
+          type="password"
+          [(ngModel)]="loginData.password"
+          placeholder="Ingresa tu contraseña"
+          required
+          class="mt-1 w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:ring-2 focus:ring-blue-500 focus:outline-none"
+        />
+      </div>
+      <button 
+        type="submit"
+        class="w-full bg-blue-600 text-white py-2 rounded-lg font-semibold hover:bg-blue-700 transition duration-300"
+      >
+        Iniciar sesión
+      </button>
+    </form>
+
+    <div class="mt-6 text-center">
+      <p class="text-sm text-gray-600">
+        ¿No tienes una cuenta?
+      </p>
+      <button
+        (click)="redirectToRegister()"
+        class="mt-2 w-full bg-gray-200 text-gray-700 py-2 rounded-lg font-medium hover:bg-gray-300 transition duration-300"
+      >
+        Crear cuenta
+      </button>
+    </div>
+  </div>
+</div>

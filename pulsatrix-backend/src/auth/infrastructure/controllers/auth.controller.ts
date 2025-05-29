@@ -1,8 +1,14 @@
-import { Controller, Post, Body } from '@nestjs/common';
+import { Controller, Post, Body, HttpStatus, HttpCode } from '@nestjs/common';
 import { SignupDto } from '../../application/dto/signup.dto';
 import { LoginDto } from '../../application/dto/login.dto';
 import { RegisterUseCase } from '../../application/use-cases/register.use-case';
 import { LoginUseCase } from '../../application/use-cases/login.use-case';
+
+class AuthResponse<T = any> {
+  statusCode: number;
+  message: string;
+  data?: T;
+}
 
 @Controller('api/v1/auth')
 export class AuthController {
@@ -12,13 +18,27 @@ export class AuthController {
   ) {}
 
   @Post('register')
-  async register(@Body() dto: SignupDto) {
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-return
-    return this.registerUseCase.execute(dto);
+  @HttpCode(HttpStatus.CREATED)
+  async register(@Body() dto: SignupDto): Promise<AuthResponse<{ accessToken: string }>> {
+    const { accessToken } = await this.registerUseCase.execute(dto);
+    return {
+      statusCode: HttpStatus.CREATED,
+      message: 'Usuario registrado con éxito',
+      data: { accessToken },
+    };
   }
 
-  @Post('login')
-  async login(@Body() dto: LoginDto) {
-    return this.loginUseCase.execute(dto);
+   @Post('login')
+  @HttpCode(HttpStatus.OK)
+  async login(
+    @Body() dto: LoginDto,
+  ): Promise<AuthResponse<{ accessToken: string }>> {
+    const { access_token } = await this.loginUseCase.execute(dto);
+
+    return {
+      statusCode: HttpStatus.OK,
+      message: 'Inicio de sesión exitoso',
+      data: { accessToken: access_token },
+    };
   }
 }
