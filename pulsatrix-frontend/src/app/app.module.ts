@@ -8,6 +8,7 @@ import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { LayoutComponent } from './modules/layout/layout.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
+import { PersonModule } from './modules/persons/person.module';
 
 @NgModule({
   declarations: [
@@ -15,12 +16,13 @@ import { FooterComponent } from './components/footer/footer.component';
     DashboardComponent,
     LayoutComponent,
     HeaderComponent,
-    FooterComponent,
+    FooterComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
-    AuthModule
+    AuthModule,
+    PersonModule
   ],
   providers: [],
   bootstrap: [AppComponent]
