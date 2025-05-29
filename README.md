@@ -10,6 +10,10 @@
 
 ---
 
+##  Video
+
+![Demostración de la app](./2025-05-29-11-28-40.gif)
+
 ## 📂 Estructura del Proyecto
 
 ```
