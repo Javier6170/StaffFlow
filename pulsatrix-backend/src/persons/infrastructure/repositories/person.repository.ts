@@ -20,6 +20,12 @@ export class PersonRepository {
       .exec();
   }
 
+
+  async findById(id: string) {
+    return this.model.findById(id).exec();
+  }
+
+
   async update(id: string, dto: UpdatePersonDto) {
     return this.model.findByIdAndUpdate(id, dto, { new: true }).exec();
   }

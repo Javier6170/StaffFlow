@@ -4,6 +4,7 @@ import { AuthRoutingRoutes } from './auth/auth-routing.module';
 import { DashboardComponent } from './modules/dashboard/dashboard.component';
 import { AuthGuard } from './core/guard/auth.guard';
 import { LayoutComponent } from './modules/layout/layout.component';
+import { PersonRoutingRoutes } from './modules/persons/person-routing.module';
 
 const routes: Routes = [
   {
@@ -21,11 +22,18 @@ const routes: Routes = [
     ],
   },
   {
+    path: 'person', 
+    canActivate: [AuthGuard],
+    loadChildren: () =>
+      import('./modules/persons/person-routing.module').then(m => m.PersonRoutingModule),
+  },
+  {
     path: '**',
     redirectTo: 'auth/login',
     pathMatch: 'full',
   },
-  ...AuthRoutingRoutes
+  ...AuthRoutingRoutes,
+  ...PersonRoutingRoutes
 ];
 
 @NgModule({

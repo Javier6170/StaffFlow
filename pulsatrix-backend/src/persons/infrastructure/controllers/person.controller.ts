@@ -7,6 +7,7 @@ import { CreatePersonDto } from '../../application/dto/create-person.dto';
 import { UpdatePersonDto } from '../../application/dto/update-person.dto';
 import { FilterPersonDto } from '../../application/dto/filter-person.dto';
 import { JwtAuthGuard } from 'src/auth/infrastructure/guards/auth.guard';
+import { PersonRepository } from '../repositories/person.repository';
 
 @Controller('api/v1/persons')
 @UseGuards(JwtAuthGuard)
@@ -15,8 +16,9 @@ export class PersonController {
     private readonly createPerson: CreatePersonUseCase,
     private readonly updatePerson: UpdatePersonUseCase,
     private readonly deletePerson: DeletePersonUseCase,
-    private readonly listPersons: ListPersonsUseCase
-  ) {}
+    private readonly listPersons: ListPersonsUseCase,
+    private readonly personRepository: PersonRepository
+  ) { }
 
   @Post()
   create(@Body() dto: CreatePersonDto) {
@@ -26,6 +28,11 @@ export class PersonController {
   @Get()
   findAll(@Query() filter: FilterPersonDto) {
     return this.listPersons.execute(filter);
+  }
+
+  @Get(':id')
+  findOne(@Param('id') id: string) {
+    return this.personRepository.findById(id);
   }
 
   @Put(':id')
